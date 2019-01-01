@@ -22,7 +22,10 @@ class Button extends Component<IProps> {
         onPress={() => this.props.onPress()}
         style={[styles.buttonStyle, activeStyling, this.props.style]}
       >
-        <Text style={styles.textStyle}> {this.props.children} </Text>
+        <Text style={[styles.textTitleStyle, styles.textStyle]}> {this.props.children} </Text>
+        <Text style={[styles.textSubtitleStyle, styles.textStyle]}>
+          Subtitle
+        </Text>
       </TouchableOpacity>
     );
   }
@@ -31,6 +34,7 @@ class Button extends Component<IProps> {
 const styles = StyleSheet.create({
   buttonStyle: {
     alignSelf: 'stretch',
+    justifyContent: 'center',
     backgroundColor: '#fff',
     borderRadius: 5,
     borderWidth: 1,
@@ -38,13 +42,18 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   textStyle: {
-    flex: 1,
-    alignSelf: 'center',
+    textAlign: 'center',
+    textAlignVertical: 'center',
     color: '#007aff',
-    fontSize: 16,
     fontWeight: '600',
     paddingTop: 10,
     paddingBottom: 10,
+  },
+  textTitleStyle: {
+    fontSize: 32,
+  },
+  textSubtitleStyle: {
+    fontSize: 16,
   },
   active: {
     flex: 0.7,
