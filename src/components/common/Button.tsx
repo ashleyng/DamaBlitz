@@ -22,7 +22,10 @@ class Button extends Component<IProps> {
         onPress={() => this.props.onPress()}
         style={[styles.buttonStyle, activeStyling, this.props.style]}
       >
-        <Text style={[styles.textTitleStyle, styles.textStyle]}> {this.props.children} </Text>
+        <Text style={[styles.textTitleStyle, styles.textStyle]}>
+          {this.props.children}
+        </Text>
+
         <Text style={[styles.textSubtitleStyle, styles.textStyle]}>
           Subtitle
         </Text>

@@ -10,6 +10,10 @@ export default class MainClass extends Component {
         <Button>
             Button1
         </Button>
+
+        <Button>
+          Button2
+        </Button>
       </View>
     );
   }
