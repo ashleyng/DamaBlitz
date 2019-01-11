@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   TouchableOpacity,
   StyleProp,
   ViewStyle,
@@ -17,18 +16,13 @@ class Button extends Component<IProps> {
 
   render() {
     const activeStyling = this.props.isActive ? styles.active : styles.notActive;
+    const onPressAction = this.props.isActive ? this.props.onPress : () => { };
     return (
       <TouchableOpacity
-        onPress={() => this.props.onPress()}
+        onPress={onPressAction}
         style={[styles.buttonStyle, activeStyling, this.props.style]}
       >
-        <Text style={[styles.textTitleStyle, styles.textStyle]}>
-          {this.props.children}
-        </Text>
-
-        <Text style={[styles.textSubtitleStyle, styles.textStyle]}>
-          Subtitle
-        </Text>
+        {this.props.children}
       </TouchableOpacity>
     );
   }
@@ -43,20 +37,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#007aff',
     margin: 5,
-  },
-  textStyle: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    color: '#007aff',
-    fontWeight: '600',
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  textTitleStyle: {
-    fontSize: 32,
-  },
-  textSubtitleStyle: {
-    fontSize: 16,
   },
   active: {
     flex: 0.7,

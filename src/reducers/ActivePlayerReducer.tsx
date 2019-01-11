@@ -1,8 +1,11 @@
 import * as actionTypes from '../actions/ActionTypes';
+import {
+  PlayerId,
+} from '../util/PlayerId';
 
-export default(state: number = 1, action: { type: String, payload: number}) => {
+export default(state: PlayerId = PlayerId.PLAYER_1, action: { type: String, payload: number}) => {
   switch (action.type) {
-    case actionTypes.CHANGE_ACTIVE_PLAYER:
+    case actionTypes.NEW_ACTIVE_PLAYER:
       return action.payload;
     default:
       return state;

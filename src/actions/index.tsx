@@ -2,7 +2,7 @@ import * as actionTypes from './ActionTypes';
 
 export const changeActivePlayer = (player: number) => {
   return {
-    type: actionTypes.CHANGE_ACTIVE_PLAYER,
+    type: actionTypes.NEW_ACTIVE_PLAYER,
     payload: player,
   };
 };
