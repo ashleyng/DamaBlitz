@@ -18,3 +18,18 @@ export const increaseP2Count = () => {
     type: actionTypes.INCREASE_P2_COUNT,
   };
 };
+
+export const timerInterval = (payload: Date) => {
+  return {
+    payload,
+    type: actionTypes.TIMER_INTERVAL,
+  };
+};
+
+export const startPressed = (payload: Date) => {
+  // console.log(payload)
+  return {
+    payload,
+    type: actionTypes.START_PLAY,
+  };
+};
