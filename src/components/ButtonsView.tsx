@@ -98,17 +98,20 @@ class MainClass extends Component<IProps> {
     ? styles.activeTextSubtitleStyle : styles.nonActiveTextSubtitleStyle;
     return (
       <Button
-        style={{ transform: [{ rotate: '180deg' }], marginBottom: -42 }}
+        style={{ marginBottom: -42 }}
         isActive={this.props.activePlayer === PlayerId.PLAYER_1}
         onPress={() => this.buttonPress(PlayerId.PLAYER_1)}
       >
-          <Text style={[buttonTitleTextSize, styles.textStyle]}>
-          {TimeFormatter(this.props.p1Time)}
-          </Text>
+          {/* need to have tranform here and not in button, will crash Android */}
+          <View style={{ transform: [{ rotate: '180deg' }] }}>
+            <Text style={[buttonTitleTextSize, styles.textStyle]}>
+              {TimeFormatter(this.props.p1Time)}
+            </Text>
 
-          <Text style={[subtitleTextStyle, styles.textStyle]}>
-            Count {this.props.p1Count}
-          </Text>
+            <Text style={[subtitleTextStyle, styles.textStyle]}>
+              Count {this.props.p1Count}
+            </Text>
+          </View>
       </Button>
     );
   }
@@ -148,7 +151,7 @@ class MainClass extends Component<IProps> {
     ? require('../../assets/pause.png')
     : require('../../assets/reset.png');
     return (
-      <View style={[styles.centerButtonStyle, { zIndex: 1000 }]}>
+      <View style={[styles.centerButtonStyle, { zIndex: 1000 }, { elevation: 1000 }]}>
         <CenterButton
           onPress={() => { this.pauseResetButton() }}
         >
