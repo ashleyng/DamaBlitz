@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   View,
-  StatusBar,
   Text,
   StyleSheet,
   LayoutAnimation,
@@ -30,8 +29,10 @@ interface IProps {
 }
 
 interface IState {
-  p1Count: number;
-  p2Count: number;
+  playerCount: {
+    p1Count: number;
+    p2Count: number;
+  }
   gameInfo: {
     activePlayer: PlayerId;
     gameRunning: boolean;
@@ -152,8 +153,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state: IState) => {
   return {
     activePlayer: state.gameInfo.activePlayer,
-    p1Count: state.p1Count,
-    p2Count: state.p2Count,
+    p1Count: state.playerCount.p1Count,
+    p2Count: state.playerCount.p2Count,
     p1Time: state.gameInfo.p1Time,
     p2Time: state.gameInfo.p2Time,
     gameRunning: state.gameInfo.gameRunning,
