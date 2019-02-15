@@ -49,5 +49,5 @@ export const pauseMatch = () => {
 export const resetMatch = () => {
   return {
     type: actionTypes.RESET_MATCH,
-  }
-}
+  };
+};

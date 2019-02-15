@@ -92,17 +92,21 @@ class MainClass extends Component<IProps> {
   }
 
   renderPlayerOneButton () {
+    const buttonTitleTextSize = this.props.activePlayer === PlayerId.PLAYER_1
+    ? styles.activeTextTitleStyle : styles.nonActiveTextTitleStyle;
+    const subtitleTextStyle = this.props.activePlayer === PlayerId.PLAYER_1
+    ? styles.activeTextSubtitleStyle : styles.nonActiveTextSubtitleStyle;
     return (
       <Button
         style={{ transform: [{ rotate: '180deg' }], marginBottom: -42 }}
         isActive={this.props.activePlayer === PlayerId.PLAYER_1}
         onPress={() => this.buttonPress(PlayerId.PLAYER_1)}
       >
-          <Text style={[styles.textTitleStyle, styles.textStyle]}>
+          <Text style={[buttonTitleTextSize, styles.textStyle]}>
           {TimeFormatter(this.props.p1Time)}
           </Text>
 
-          <Text style={[styles.textSubtitleStyle, styles.textStyle]}>
+          <Text style={[subtitleTextStyle, styles.textStyle]}>
             Count {this.props.p1Count}
           </Text>
       </Button>
@@ -110,17 +114,21 @@ class MainClass extends Component<IProps> {
   }
 
   renderPlayerTwoButton() {
+    const buttonTitleTextSize = this.props.activePlayer === PlayerId.PLAYER_2
+    ? styles.activeTextTitleStyle : styles.nonActiveTextTitleStyle;
+    const subtitleTextStyle = this.props.activePlayer === PlayerId.PLAYER_2
+    ? styles.activeTextSubtitleStyle : styles.nonActiveTextSubtitleStyle;
     return (
       <Button
         style={{marginTop: -42 }}
         isActive={this.props.activePlayer === PlayerId.PLAYER_2}
         onPress={() => this.buttonPress(PlayerId.PLAYER_2)}
       >
-        <Text style={[styles.textTitleStyle, styles.textStyle]}>
+        <Text style={[buttonTitleTextSize, styles.textStyle]}>
           {TimeFormatter(this.props.p2Time)}
         </Text>
 
-        <Text style={[styles.textSubtitleStyle, styles.textStyle]}>
+        <Text style={[subtitleTextStyle, styles.textStyle]}>
           Count {this.props.p2Count}
         </Text>
       </Button>
@@ -172,10 +180,16 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
   },
-  textTitleStyle: {
-    fontSize: 32,
+  activeTextTitleStyle: {
+    fontSize: 60,
   },
-  textSubtitleStyle: {
+  nonActiveTextTitleStyle: {
+    fontSize: 42,
+  },
+  activeTextSubtitleStyle: {
+    fontSize: 24,
+  },
+  nonActiveTextSubtitleStyle: {
     fontSize: 16,
   },
   centerButtonStyle: {
