@@ -28,7 +28,6 @@ export const timerInterval = (currentTime: Date) => {
 };
 
 export const startTimer = (currentTime: Date) => {
-  // console.log(payload)
   return {
     currentTime,
     type: actionTypes.START_TIMER,

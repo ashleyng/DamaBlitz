@@ -10,6 +10,10 @@ interface IState {
   p1Time: number;
   p2Time: number;
   activePlayer?: PlayerId;
+  p1Offset: number;
+  p2Offset: number;
+  p1Elapsed: number;
+  p2Elapsed: number;
 }
 
 const DEFAULT_TIME: number = 60000;
@@ -21,6 +25,10 @@ const INITIAL_STATE: IState = {
   p1Time: DEFAULT_TIME,
   p2Time: DEFAULT_TIME,
   activePlayer: PlayerId.PLAYER_1,
+  p1Offset: 0,
+  p2Offset: 0,
+  p1Elapsed: 0,
+  p2Elapsed: 0,
 };
 
 
@@ -28,8 +36,6 @@ export default (
   state = INITIAL_STATE,
   action: { type: String, currentTime: Date, newActivePlayer: PlayerId },
   ) => {
-  // console.log('reducer: ', state)
-  console.log('type: ', action.type)
   switch (action.type) {
     case actionTypes.START_MATCH:
       return {
@@ -37,40 +43,47 @@ export default (
         gameRunning: true,
         activePlayer: PlayerId.PLAYER_2,
       };
+
     case actionTypes.START_TIMER:
       return {
         ...state,
         p1StartTime: action.currentTime,
         p2StartTime: action.currentTime,
       };
+
     case actionTypes.NEW_ACTIVE_PLAYER:
       if (action.newActivePlayer === PlayerId.PLAYER_1) {
         return {
           ...state,
           activePlayer: action.newActivePlayer,
           p1StartTime: action.currentTime,
+          p2Offset: state.p2Elapsed,
         };
       }
       return {
         ...state,
         activePlayer: action.newActivePlayer,
         p2StartTime: action.currentTime,
+        p1Offset: state.p1Elapsed,
       };
+
     case actionTypes.TIMER_INTERVAL:
       const playerTimer = state.activePlayer === PlayerId.PLAYER_1
       ? state.p1StartTime
       : state.p2StartTime;
+      const playerOffset = state.activePlayer === PlayerId.PLAYER_1
+      ? state.p1Offset
+      : state.p2Offset;
 
-      let time: number = DEFAULT_TIME - (action.currentTime - playerTimer)
-      const isRunning: boolean = time > 0;
-
+      const elapsedTime: number = (action.currentTime - playerTimer) + playerOffset
+      let timeLeft = DEFAULT_TIME - elapsedTime;
+      const isRunning: boolean = timeLeft > 0;
+      timeLeft = isRunning ? timeLeft : 0;
       if (state.activePlayer === PlayerId.PLAYER_1) {
-        time = isRunning ? time : 0;
-        return { ...state, p1Time: time, gameRunning: isRunning };
+        return { ...state, p1Time: timeLeft, gameRunning: isRunning, p1Elapsed: elapsedTime };
       }
+      return { ...state, p2Time: timeLeft, gameRunning: isRunning, p2Elapsed: elapsedTime };
 
-      time = isRunning ? time : 0;
-      return { ...state, p2Time: time, gameRunning: isRunning };
     default:
       return state;
   }

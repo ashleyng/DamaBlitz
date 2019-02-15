@@ -56,7 +56,6 @@ class MainClass extends Component<IProps> {
     this.timerSetup();
     switch (currentActivePlayer) {
       case PlayerId.PLAYER_1:
-        console.log('-------------')
         this.props.changeActivePlayer(PlayerId.PLAYER_2, new Date());
         this.props.increaseP1Count();
         break;
@@ -147,15 +146,12 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: IState) => {
-  console.log(state)
   return {
     activePlayer: state.gameInfo.activePlayer,
     p1Count: state.p1Count,
     p2Count: state.p2Count,
     p1Time: state.gameInfo.p1Time,
     p2Time: state.gameInfo.p2Time,
-    // p1IsRunning: state.gameInfo.p1IsRunning,
-    // p2IsRunning: state.gameInfo.p2IsRunning,
     gameRunning: state.gameInfo.gameRunning,
   };
 };
