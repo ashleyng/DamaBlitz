@@ -44,6 +44,9 @@ export default (
         activePlayer: PlayerId.PLAYER_2,
       };
 
+    case actionTypes.RESET_MATCH:
+      return INITIAL_STATE;
+
     case actionTypes.START_TIMER:
       return {
         ...state,
@@ -52,7 +55,6 @@ export default (
       };
 
     case actionTypes.PAUSE_MATCH:
-      console.log('PAUSE_--------')
       return {
         ...state,
         gameRunning: false,

@@ -28,6 +28,7 @@ interface IProps {
   timerInterval: (arg0: Date) => { };
   startMatch: () => { };
   pauseMatch: () => { };
+  resetMatch: () => { };
 }
 
 interface IState {
@@ -126,6 +127,14 @@ class MainClass extends Component<IProps> {
     );
   }
 
+  pauseResetButton() {
+    if (this.props.gameRunning) {
+      this.props.pauseMatch();
+    } else {
+      this.props.resetMatch();
+    }
+  }
+
   renderCenterButton() {
     const imageUri = this.props.gameRunning
     ? require('../../assets/pause.png')
@@ -133,7 +142,8 @@ class MainClass extends Component<IProps> {
     return (
       <View style={[styles.centerButtonStyle, { zIndex: 1000 }]}>
         <CenterButton
-          onPress={() => {this.props.pauseMatch()}}>
+          onPress={() => { this.pauseResetButton() }}
+        >
           <Image
             source={imageUri}
           />

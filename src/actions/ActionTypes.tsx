@@ -7,3 +7,4 @@ export const TIMER_INTERVAL = 'TIMER_INTERVAL';
 export const START_MATCH = 'START_MATCH';
 
 export const PAUSE_MATCH = 'PAUSE_MATCH';
+export const RESET_MATCH = 'RESET_MATCH';

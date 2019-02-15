@@ -16,6 +16,8 @@ export default (state: IState = INITIAL_STATE, action: { type: String }) => {
       return { ...state, p1Count: state.p1Count + 1 };
     case actionTypes.INCREASE_P2_COUNT:
       return { ...state, p2Count: state.p2Count + 1 };
+    case actionTypes.RESET_MATCH:
+      return INITIAL_STATE;
     default:
       return state;
   }
