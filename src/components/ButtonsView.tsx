@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { 
+import {
   View,
   StatusBar,
   Text,
@@ -50,36 +50,46 @@ class MainClass extends Component<IProps> {
     }
   }
 
-  render() {
+  renderPlayerOneButton () {
     return (
-      <View style={{ flex: 1 }}>
-        <StatusBar hidden={true} />
-        <Button
-          style={{ transform: [{ rotate: '180deg' }] }}
-          isActive={this.props.activePlayer === PlayerId.PLAYER_1}
-          onPress={() => this.buttonPress(PlayerId.PLAYER_1)}
-        >
-            <Text style={[styles.textTitleStyle, styles.textStyle]}>
-              Button1
-            </Text>
-
-            <Text style={[styles.textSubtitleStyle, styles.textStyle]}>
-              Subtitle
-            </Text>
-        </Button>
-
-        <Button
-          isActive={this.props.activePlayer === PlayerId.PLAYER_2}
-          onPress={() => this.buttonPress(PlayerId.PLAYER_2)}
-        >
+      <Button
+        style={{ transform: [{ rotate: '180deg' }] }}
+        isActive={this.props.activePlayer === PlayerId.PLAYER_1}
+        onPress={() => this.buttonPress(PlayerId.PLAYER_1)}
+      >
           <Text style={[styles.textTitleStyle, styles.textStyle]}>
-            Button2
+            Button1
           </Text>
 
           <Text style={[styles.textSubtitleStyle, styles.textStyle]}>
             Subtitle
           </Text>
-        </Button>
+      </Button>
+    );
+  }
+
+  renderPlayerTwoButton() {
+    return (
+      <Button
+        isActive={this.props.activePlayer === PlayerId.PLAYER_2}
+        onPress={() => this.buttonPress(PlayerId.PLAYER_2)}
+      >
+        <Text style={[styles.textTitleStyle, styles.textStyle]}>
+          Button2
+        </Text>
+
+        <Text style={[styles.textSubtitleStyle, styles.textStyle]}>
+          Subtitle
+        </Text>
+      </Button>
+    );
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        {this.renderPlayerOneButton()}
+        {this.renderPlayerTwoButton()}
       </View>
     );
   }
