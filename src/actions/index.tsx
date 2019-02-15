@@ -1,9 +1,10 @@
 import * as actionTypes from './ActionTypes';
 
-export const changeActivePlayer = (player: number) => {
+export const changeActivePlayer = (player: number, currentTime: Date) => {
   return {
+    currentTime,
     type: actionTypes.NEW_ACTIVE_PLAYER,
-    payload: player,
+    newActivePlayer: player,
   };
 };
 
@@ -19,17 +20,23 @@ export const increaseP2Count = () => {
   };
 };
 
-export const timerInterval = (payload: Date) => {
+export const timerInterval = (currentTime: Date) => {
   return {
-    payload,
+    currentTime,
     type: actionTypes.TIMER_INTERVAL,
   };
 };
 
-export const startPressed = (payload: Date) => {
+export const startTimer = (currentTime: Date) => {
   // console.log(payload)
   return {
-    payload,
-    type: actionTypes.START_PLAY,
+    currentTime,
+    type: actionTypes.START_TIMER,
+  };
+};
+
+export const startMatch = () => {
+  return {
+    type: actionTypes.START_MATCH,
   };
 };

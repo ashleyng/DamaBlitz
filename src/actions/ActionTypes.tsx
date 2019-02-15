@@ -2,5 +2,6 @@ export const NEW_ACTIVE_PLAYER = 'NEW_ACTIVE_PLAYER';
 export const INCREASE_P1_COUNT = 'INCREASE_P1_COUNT';
 export const INCREASE_P2_COUNT = 'INCREASE_P2_COUNT';
 
-export const START_PLAY = 'START_PLAY';
+export const START_TIMER = 'START_TIMER';
 export const TIMER_INTERVAL = 'TIMER_INTERVAL';
+export const START_MATCH = 'START_MATCH';
