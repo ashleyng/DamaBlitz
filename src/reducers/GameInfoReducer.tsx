@@ -36,7 +36,6 @@ export default (
   state = INITIAL_STATE,
   action: { type: String, currentTime: Date, newActivePlayer: PlayerId },
   ) => {
-    console.log(action.type)
   switch (action.type) {
     case actionTypes.START_MATCH:
       return {
@@ -50,6 +49,13 @@ export default (
         ...state,
         p1StartTime: action.currentTime,
         p2StartTime: action.currentTime,
+      };
+
+    case actionTypes.PAUSE_MATCH:
+      console.log('PAUSE_--------')
+      return {
+        ...state,
+        gameRunning: false,
       };
 
     case actionTypes.NEW_ACTIVE_PLAYER:
@@ -69,6 +75,9 @@ export default (
       };
 
     case actionTypes.TIMER_INTERVAL:
+      if (!state.gameRunning) {
+        return { ...state }
+      }
       const playerTimer = state.activePlayer === PlayerId.PLAYER_1
       ? state.p1StartTime
       : state.p2StartTime;
@@ -76,7 +85,7 @@ export default (
       ? state.p1Offset
       : state.p2Offset;
 
-      const elapsedTime: number = (action.currentTime - playerTimer) + playerOffset
+      const elapsedTime: number = (action.currentTime - playerTimer) + playerOffset;
       let timeLeft = DEFAULT_TIME - elapsedTime;
       const isRunning: boolean = timeLeft > 0;
       timeLeft = isRunning ? timeLeft : 0;

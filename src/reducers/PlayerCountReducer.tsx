@@ -8,7 +8,7 @@ interface IState {
 const INITIAL_STATE =  {
   p1Count: 0,
   p2Count: 0,
-}
+};
 
 export default (state: IState = INITIAL_STATE, action: { type: String }) => {
   switch (action.type) {

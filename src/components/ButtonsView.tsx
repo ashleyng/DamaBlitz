@@ -4,9 +4,10 @@ import {
   Text,
   StyleSheet,
   LayoutAnimation,
+  Image,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Button } from './common';
+import { Button, CenterButton } from './common';
 import * as actions from '../actions';
 import {
   PlayerId,
@@ -26,6 +27,7 @@ interface IProps {
   startTimer: (arg0: Date) => { };
   timerInterval: (arg0: Date) => { };
   startMatch: () => { };
+  pauseMatch: () => { };
 }
 
 interface IState {
@@ -75,23 +77,23 @@ class MainClass extends Component<IProps> {
     if (!this.props.gameRunning) {
       clearInterval(this.runningInterval);
     } else {
-      this.setupInterval()
+      this.setupInterval();
     }
   }
 
   setupInterval = () => {
     this.runningInterval = setInterval(() => {
       this.props.timerInterval(new Date());
-      if (!this.props.gameRunning) {
-        clearInterval(this.runningInterval);
-      }
-    }, 30);
+      // if (!this.props.gameRunning) {
+      //   clearInterval(this.runningInterval);
+      // }
+    }, 60);
   }
 
   renderPlayerOneButton () {
     return (
       <Button
-        style={{ transform: [{ rotate: '180deg' }] }}
+        style={{ transform: [{ rotate: '180deg' }], marginBottom: -42 }}
         isActive={this.props.activePlayer === PlayerId.PLAYER_1}
         onPress={() => this.buttonPress(PlayerId.PLAYER_1)}
       >
@@ -109,6 +111,7 @@ class MainClass extends Component<IProps> {
   renderPlayerTwoButton() {
     return (
       <Button
+        style={{marginTop: -42 }}
         isActive={this.props.activePlayer === PlayerId.PLAYER_2}
         onPress={() => this.buttonPress(PlayerId.PLAYER_2)}
       >
@@ -123,10 +126,27 @@ class MainClass extends Component<IProps> {
     );
   }
 
+  renderCenterButton() {
+    const imageUri = this.props.gameRunning
+    ? require('../../assets/pause.png')
+    : require('../../assets/reset.png');
+    return (
+      <View style={[styles.centerButtonStyle, { zIndex: 1000 }]}>
+        <CenterButton
+          onPress={() => {this.props.pauseMatch()}}>
+          <Image
+            source={imageUri}
+          />
+        </CenterButton>
+      </View>
+    );
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
         {this.renderPlayerOneButton()}
+        {this.renderCenterButton()}
         {this.renderPlayerTwoButton()}
       </View>
     );
@@ -147,6 +167,11 @@ const styles = StyleSheet.create({
   },
   textSubtitleStyle: {
     fontSize: 16,
+  },
+  centerButtonStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
 });
 

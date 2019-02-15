@@ -5,3 +5,5 @@ export const INCREASE_P2_COUNT = 'INCREASE_P2_COUNT';
 export const START_TIMER = 'START_TIMER';
 export const TIMER_INTERVAL = 'TIMER_INTERVAL';
 export const START_MATCH = 'START_MATCH';
+
+export const PAUSE_MATCH = 'PAUSE_MATCH';

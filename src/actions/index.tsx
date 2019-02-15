@@ -39,3 +39,9 @@ export const startMatch = () => {
     type: actionTypes.START_MATCH,
   };
 };
+
+export const pauseMatch = () => {
+  return {
+    type: actionTypes.PAUSE_MATCH,
+  };
+};
