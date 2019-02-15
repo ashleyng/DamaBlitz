@@ -50,7 +50,9 @@ class MainClass extends Component<IProps> {
 
   buttonPress = (currentActivePlayer: PlayerId) => {
     if (!this.props.gameRunning) {
-      this.props.startMatch()
+      this.props.startMatch();
+      this.props.startTimer(new Date());
+      this.setupInterval();
       return;
     }
     this.timerSetup();
@@ -72,15 +74,17 @@ class MainClass extends Component<IProps> {
     if (!this.props.gameRunning) {
       clearInterval(this.runningInterval);
     } else {
-      this.props.startTimer(new Date());
-
-      this.runningInterval = setInterval(() => {
-        this.props.timerInterval(new Date());
-        if (!this.props.gameRunning) {
-          clearInterval(this.runningInterval);
-        }
-      }, 30);
+      this.setupInterval()
     }
+  }
+
+  setupInterval = () => {
+    this.runningInterval = setInterval(() => {
+      this.props.timerInterval(new Date());
+      if (!this.props.gameRunning) {
+        clearInterval(this.runningInterval);
+      }
+    }, 30);
   }
 
   renderPlayerOneButton () {

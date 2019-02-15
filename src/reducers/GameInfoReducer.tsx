@@ -5,11 +5,11 @@ import {
 
 interface IState {
   gameRunning: boolean;
-  p1StartTime?: Date;
-  p2StartTime?: Date;
+  p1StartTime?: Date | null;
+  p2StartTime?: Date | null;
   p1Time: number;
   p2Time: number;
-  activePlayer?: PlayerId;
+  activePlayer?: PlayerId | null;
   p1Offset: number;
   p2Offset: number;
   p1Elapsed: number;
@@ -36,6 +36,7 @@ export default (
   state = INITIAL_STATE,
   action: { type: String, currentTime: Date, newActivePlayer: PlayerId },
   ) => {
+    console.log(action.type)
   switch (action.type) {
     case actionTypes.START_MATCH:
       return {
