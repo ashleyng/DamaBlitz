@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  TouchableHighlight,
+  TouchableOpacity,
   StyleProp,
   ViewStyle,
   Insets,
   View,
   Text,
+  TextStyle,
 } from 'react-native';
 
 interface IProps {
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
   isActive: Boolean;
+  disabled?: Boolean;
   hitSlop?: Insets;
   title?: String;
   subTitle?: String;
   applyTransform: boolean;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 class Button extends Component<IProps> {
@@ -30,23 +33,24 @@ class Button extends Component<IProps> {
     ? styles.activeTextSubtitleStyle : styles.nonActiveTextSubtitleStyle;
     const transform = this.props.applyTransform ? { transform: [{ rotate: '180deg' }] } : { };
     return (
-      <TouchableHighlight
+      <TouchableOpacity
         hitSlop={this.props.hitSlop}
-        underlayColor={'#FFF'}
+        activeOpacity={1.0}
         onPress={onPressAction}
+        disabled={this.props.disabled}
         style={[styles.buttonStyle, activeButtonStyling, this.props.style]}
       >
         {/* need to have tranform here and not in button, will crash Android */}
         <View style={transform}>
-          <Text style={[buttonTitleTextSize, styles.textStyle]}>
+          <Text style={[buttonTitleTextSize, styles.textStyle, this.props.textStyle]}>
             {this.props.title}
           </Text>
 
-          <Text style={[subtitleTextStyle, styles.textStyle]}>
+          <Text style={[subtitleTextStyle, styles.textStyle, this.props.textStyle]}>
             {this.props.subTitle}
           </Text>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 }
@@ -57,14 +61,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff',
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#007aff',
+    borderWidth: 0,
     margin: 5,
   },
   textStyle: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    color: '#007aff',
     fontWeight: '600',
     paddingTop: 10,
     paddingBottom: 10,

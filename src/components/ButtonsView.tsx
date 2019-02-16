@@ -19,6 +19,7 @@ interface IProps {
   gameRunning: boolean;
   p1Time: number;
   p2Time: number;
+  winner?: PlayerId;
   changeActivePlayer: (playerId: PlayerId, currentTime: Date) => { };
   increaseP1Count: () => { };
   increaseP2Count: () => { };
@@ -33,12 +34,13 @@ interface IState {
   playerCount: {
     p1Count: number;
     p2Count: number;
-  }
+  };
   gameInfo: {
     activePlayer: PlayerId;
     gameRunning: boolean;
     p1Time: number;
     p2Time: number;
+    winner?: PlayerId
   };
 }
 
@@ -50,7 +52,7 @@ class MainClass extends Component<IProps> {
     LayoutAnimation.easeInEaseOut();
   }
 
-  buttonPress = (currentActivePlayer: PlayerId) => {
+  private buttonPress = (currentActivePlayer: PlayerId) => {
     if (!this.props.gameRunning) {
       this.props.startMatch();
       this.props.startTimer(new Date());
@@ -72,7 +74,7 @@ class MainClass extends Component<IProps> {
     }
   }
 
-  timerSetup = () => {
+  private timerSetup = () => {
     if (!this.props.gameRunning) {
       clearInterval(this.runningInterval);
     } else {
@@ -80,7 +82,7 @@ class MainClass extends Component<IProps> {
     }
   }
 
-  setupInterval = () => {
+  private setupInterval = () => {
     this.runningInterval = setInterval(() => {
       this.props.timerInterval(new Date());
       // if (!this.props.gameRunning) {
@@ -89,34 +91,47 @@ class MainClass extends Component<IProps> {
     }, 60);
   }
 
-  renderPlayerOneButton () {
+  private subtitleText(player: PlayerId) {
+    if (this.props.winner === null) {
+      return !this.props.gameRunning && this.props.activePlayer === player
+      ? 'Tap to start.' : '';
+    }
+    return this.props.winner === player
+    ? 'WINNER!' : 'Game Over';
+  }
+
+  private renderPlayerOneButton () {
     return (
       <Button
-        style={{ marginBottom: -42 }}
+        style={{ marginBottom: -42, backgroundColor: '#5C94B8' }}
+        textStyle={{ color: '#000' }}
         isActive={this.props.activePlayer === PlayerId.PLAYER_1}
+        disabled={this.props.winner !== null || this.props.activePlayer !== PlayerId.PLAYER_1}
         onPress={() => this.buttonPress(PlayerId.PLAYER_1)}
         applyTransform={true}
         title={TimeFormatter(this.props.p1Time)}
-        subTitle={`Count ${this.props.p1Count}`}
+        subTitle={this.subtitleText(PlayerId.PLAYER_1)}
       />
     );
   }
 
-  renderPlayerTwoButton() {
+  private renderPlayerTwoButton() {
     return (
       <Button
-        style={{ marginTop: -42 }}
+        style={{ marginTop: -42, backgroundColor: '#471516' }}
+        textStyle={{ color: '#FFF' }}
         hitSlop={{ top: -40 }} // For android, button hitbox overlaps with center buttons
         isActive={this.props.activePlayer === PlayerId.PLAYER_2}
+        disabled={this.props.winner !== null || this.props.activePlayer !== PlayerId.PLAYER_2}
         onPress={() => this.buttonPress(PlayerId.PLAYER_2)}
         applyTransform={false}
         title={TimeFormatter(this.props.p2Time)}
-        subTitle={`Count ${this.props.p2Count}`}
+        subTitle={this.subtitleText(PlayerId.PLAYER_2)}
       />
     );
   }
 
-  pauseResetButton() {
+  private pauseResetButton() {
     if (this.props.gameRunning) {
       this.props.pauseMatch();
     } else {
@@ -124,7 +139,7 @@ class MainClass extends Component<IProps> {
     }
   }
 
-  renderCenterButton() {
+  private renderCenterButton() {
     const imageUri = this.props.gameRunning
     ? require('../../assets/pause.png')
     : require('../../assets/reset.png');
@@ -140,7 +155,7 @@ class MainClass extends Component<IProps> {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#e8e8e8' }}>
         {this.renderPlayerOneButton()}
         {this.renderCenterButton()}
         {this.renderPlayerTwoButton()}
@@ -165,6 +180,7 @@ const mapStateToProps = (state: IState) => {
     p1Time: state.gameInfo.p1Time,
     p2Time: state.gameInfo.p2Time,
     gameRunning: state.gameInfo.gameRunning,
+    winner: state.gameInfo.winner,
   };
 };
 
