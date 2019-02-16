@@ -123,17 +123,20 @@ class MainClass extends Component<IProps> {
     ? styles.activeTextSubtitleStyle : styles.nonActiveTextSubtitleStyle;
     return (
       <Button
-        style={{marginTop: -42 }}
+        style={{ marginTop: -42 }}
+        hitSlop={{ top: -40 }} // For android, button hitbox overlaps with center buttons
         isActive={this.props.activePlayer === PlayerId.PLAYER_2}
         onPress={() => this.buttonPress(PlayerId.PLAYER_2)}
       >
-        <Text style={[buttonTitleTextSize, styles.textStyle]}>
-          {TimeFormatter(this.props.p2Time)}
-        </Text>
+        <View>
+          <Text style={[buttonTitleTextSize, styles.textStyle]}>
+            {TimeFormatter(this.props.p2Time)}
+          </Text>
 
-        <Text style={[subtitleTextStyle, styles.textStyle]}>
-          Count {this.props.p2Count}
-        </Text>
+          <Text style={[subtitleTextStyle, styles.textStyle]}>
+            Count {this.props.p2Count}
+          </Text>
+        </View>
       </Button>
     );
   }

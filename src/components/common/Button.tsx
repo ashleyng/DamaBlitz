@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  TouchableOpacity,
+  TouchableHighlight,
   StyleProp,
   ViewStyle,
+  Insets,
 } from 'react-native';
 
 interface IProps {
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
   isActive: Boolean;
+  hitSlop: Insets;
 }
 
 class Button extends Component<IProps> {
@@ -18,12 +20,14 @@ class Button extends Component<IProps> {
     const activeStyling = this.props.isActive ? styles.active : styles.notActive;
     const onPressAction = this.props.isActive ? this.props.onPress : () => { };
     return (
-      <TouchableOpacity
+      <TouchableHighlight
+        hitSlop={this.props.hitSlop}
+        underlayColor={'#FFF'}
         onPress={onPressAction}
         style={[styles.buttonStyle, activeStyling, this.props.style]}
       >
         {this.props.children}
-      </TouchableOpacity>
+      </TouchableHighlight>
     );
   }
 }
