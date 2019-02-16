@@ -4,11 +4,13 @@ import {
   TouchableOpacity,
   StyleProp,
   ViewStyle,
+  Image,
 } from 'react-native';
 
 interface IProps {
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
+  imgageUri: any;
 }
 
 class CenterButton extends Component<IProps> {
@@ -19,7 +21,9 @@ class CenterButton extends Component<IProps> {
         onPress={this.props.onPress}
         style={[styles.buttonStyle, this.props.style]}
       >
-        {this.props.children}
+        <Image
+            source={this.props.imgageUri}
+        />
       </TouchableOpacity>
     );
   }

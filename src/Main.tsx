@@ -9,7 +9,7 @@ export default class MainClass extends React.Component {
   public render() {
     return (
       <Provider store={createStore(reducers)}>
-        <StatusBar hidden />
+        <StatusBar hidden={true} />
         <ButtonsView />
       </Provider>
     );

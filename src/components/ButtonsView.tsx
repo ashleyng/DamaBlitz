@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   LayoutAnimation,
-  Image,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, CenterButton } from './common';
@@ -92,52 +90,29 @@ class MainClass extends Component<IProps> {
   }
 
   renderPlayerOneButton () {
-    const buttonTitleTextSize = this.props.activePlayer === PlayerId.PLAYER_1
-    ? styles.activeTextTitleStyle : styles.nonActiveTextTitleStyle;
-    const subtitleTextStyle = this.props.activePlayer === PlayerId.PLAYER_1
-    ? styles.activeTextSubtitleStyle : styles.nonActiveTextSubtitleStyle;
     return (
       <Button
         style={{ marginBottom: -42 }}
         isActive={this.props.activePlayer === PlayerId.PLAYER_1}
         onPress={() => this.buttonPress(PlayerId.PLAYER_1)}
-      >
-          {/* need to have tranform here and not in button, will crash Android */}
-          <View style={{ transform: [{ rotate: '180deg' }] }}>
-            <Text style={[buttonTitleTextSize, styles.textStyle]}>
-              {TimeFormatter(this.props.p1Time)}
-            </Text>
-
-            <Text style={[subtitleTextStyle, styles.textStyle]}>
-              Count {this.props.p1Count}
-            </Text>
-          </View>
-      </Button>
+        applyTransform={true}
+        title={TimeFormatter(this.props.p1Time)}
+        subTitle={`Count ${this.props.p1Count}`}
+      />
     );
   }
 
   renderPlayerTwoButton() {
-    const buttonTitleTextSize = this.props.activePlayer === PlayerId.PLAYER_2
-    ? styles.activeTextTitleStyle : styles.nonActiveTextTitleStyle;
-    const subtitleTextStyle = this.props.activePlayer === PlayerId.PLAYER_2
-    ? styles.activeTextSubtitleStyle : styles.nonActiveTextSubtitleStyle;
     return (
       <Button
         style={{ marginTop: -42 }}
         hitSlop={{ top: -40 }} // For android, button hitbox overlaps with center buttons
         isActive={this.props.activePlayer === PlayerId.PLAYER_2}
         onPress={() => this.buttonPress(PlayerId.PLAYER_2)}
-      >
-        <View>
-          <Text style={[buttonTitleTextSize, styles.textStyle]}>
-            {TimeFormatter(this.props.p2Time)}
-          </Text>
-
-          <Text style={[subtitleTextStyle, styles.textStyle]}>
-            Count {this.props.p2Count}
-          </Text>
-        </View>
-      </Button>
+        applyTransform={false}
+        title={TimeFormatter(this.props.p2Time)}
+        subTitle={`Count ${this.props.p2Count}`}
+      />
     );
   }
 
@@ -154,14 +129,11 @@ class MainClass extends Component<IProps> {
     ? require('../../assets/pause.png')
     : require('../../assets/reset.png');
     return (
-      <View style={[styles.centerButtonStyle, { zIndex: 1000 }, { elevation: 1000 }]}>
+      <View style={[styles.centerButtonRowStyle, { zIndex: 1000 }, { elevation: 1000 }]}>
         <CenterButton
           onPress={() => { this.pauseResetButton() }}
-        >
-          <Image
-            source={imageUri}
-          />
-        </CenterButton>
+          imgageUri={imageUri}
+        />
       </View>
     );
   }
@@ -178,27 +150,7 @@ class MainClass extends Component<IProps> {
 }
 
 const styles = StyleSheet.create({
-  textStyle: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    color: '#007aff',
-    fontWeight: '600',
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  activeTextTitleStyle: {
-    fontSize: 60,
-  },
-  nonActiveTextTitleStyle: {
-    fontSize: 42,
-  },
-  activeTextSubtitleStyle: {
-    fontSize: 24,
-  },
-  nonActiveTextSubtitleStyle: {
-    fontSize: 16,
-  },
-  centerButtonStyle: {
+  centerButtonRowStyle: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',

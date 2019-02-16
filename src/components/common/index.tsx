@@ -1,2 +1,2 @@
-export * from './Button';
+export * from './PlayerButton';
 export * from './CenterButton';
