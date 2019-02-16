@@ -62,7 +62,7 @@ export default (
       };
 
     case actionTypes.NEW_ACTIVE_PLAYER:
-      console.log(action)
+      // console.log(action)
       if (action.newActivePlayer === PlayerId.PLAYER_1) {
         return {
           ...state,

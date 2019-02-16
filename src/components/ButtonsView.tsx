@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   LayoutAnimation,
+  Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, CenterButton } from './common';
@@ -83,11 +84,9 @@ class MainClass extends Component<IProps> {
   }
 
   private setupInterval = () => {
+    clearInterval(this.runningInterval);
     this.runningInterval = setInterval(() => {
       this.props.timerInterval(new Date());
-      // if (!this.props.gameRunning) {
-      //   clearInterval(this.runningInterval);
-      // }
     }, 60);
   }
 
@@ -116,11 +115,13 @@ class MainClass extends Component<IProps> {
   }
 
   private renderPlayerTwoButton() {
+    // For android, button hitbox overlaps with center buttons
+    const hitSlop = Platform.OS === 'android' ? { top: -40 } : undefined;
     return (
       <Button
         style={{ marginTop: -42, backgroundColor: '#471516' }}
         textStyle={{ color: '#FFF' }}
-        hitSlop={{ top: -40 }} // For android, button hitbox overlaps with center buttons
+        hitSlop={hitSlop}
         isActive={this.props.activePlayer === PlayerId.PLAYER_2}
         disabled={this.props.winner !== null || this.props.activePlayer !== PlayerId.PLAYER_2}
         onPress={() => this.buttonPress(PlayerId.PLAYER_2)}
@@ -132,6 +133,7 @@ class MainClass extends Component<IProps> {
   }
 
   private pauseResetButton() {
+    clearInterval(this.runningInterval);
     if (this.props.gameRunning) {
       this.props.pauseMatch();
     } else {

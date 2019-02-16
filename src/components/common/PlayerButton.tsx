@@ -14,7 +14,7 @@ interface IProps {
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
   isActive: Boolean;
-  disabled?: Boolean;
+  disabled?: boolean;
   hitSlop?: Insets;
   title?: String;
   subTitle?: String;
@@ -32,6 +32,7 @@ class Button extends Component<IProps> {
     const subtitleTextStyle = this.props.isActive
     ? styles.activeTextSubtitleStyle : styles.nonActiveTextSubtitleStyle;
     const transform = this.props.applyTransform ? { transform: [{ rotate: '180deg' }] } : { };
+
     return (
       <TouchableOpacity
         hitSlop={this.props.hitSlop}
