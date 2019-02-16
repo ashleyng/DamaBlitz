@@ -22,6 +22,7 @@ class CenterButton extends Component<IProps> {
         style={[styles.buttonStyle, this.props.style]}
       >
         <Image
+            style={styles.imageStyle}
             source={this.props.imgageUri}
         />
       </TouchableOpacity>
@@ -39,6 +40,10 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     borderWidth: 0,
     margin: 5,
+  },
+  imageStyle: {
+    width: 60,
+    height: 60,
   },
 });
 
